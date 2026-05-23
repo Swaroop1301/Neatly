@@ -1,0 +1,898 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Neatly Detailed Report - 15 Pages</title>
+  <style>
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f0f2f5;
+    }
+    .page {
+      width: 210mm;
+      height: 297mm;
+      margin: 0 auto;
+      background: #fff;
+      page-break-after: always;
+      position: relative;
+    }
+    .sheet {
+      position: absolute;
+      inset: 0;
+      padding: 18mm 18mm 16mm 18mm;
+      display: flex;
+      flex-direction: column;
+    }
+    .header {
+      font-size: 11pt;
+      color: #2f3b52;
+      font-weight: 600;
+      margin-bottom: 6mm;
+      border-bottom: 1px solid #dbe2ef;
+      padding-bottom: 2mm;
+    }
+    .content {
+      flex: 1;
+      font-size: 9.2pt;
+      line-height: 1.28;
+      color: #0f172a;
+      white-space: normal;
+      overflow: hidden;
+    }
+    .line {
+      min-height: 4.2mm;
+      white-space: pre-wrap;
+      word-break: normal;
+    }
+    .footer {
+      margin-top: 5mm;
+      font-size: 9pt;
+      color: #64748b;
+      text-align: right;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 2.5mm;
+    }
+    .cover .sheet {
+      padding: 22mm 22mm 18mm 22mm;
+      background: linear-gradient(165deg, #f8fafc 0%, #ffffff 45%, #eef2ff 100%);
+    }
+    .cover-block {
+      flex: 1;
+      border: 1px solid #d0d7e2;
+      border-radius: 10px;
+      padding: 16mm 14mm;
+      background: rgba(255,255,255,0.85);
+      box-shadow: 0 8px 24px rgba(15,23,42,0.06);
+    }
+    h1 {
+      margin: 0 0 4mm 0;
+      font-size: 26pt;
+      line-height: 1.15;
+      color: #1e293b;
+    }
+    h2 {
+      margin: 0 0 10mm 0;
+      font-size: 14pt;
+      font-weight: 600;
+      color: #334155;
+    }
+    .meta p {
+      margin: 0 0 2.6mm 0;
+      font-size: 11pt;
+      color: #1f2937;
+    }
+    .summary {
+      margin-top: 10mm;
+      padding: 6mm;
+      border-left: 4px solid #6366f1;
+      background: #f8fafc;
+      font-size: 10.5pt;
+      color: #334155;
+      line-height: 1.35;
+    }
+  </style>
+</head>
+<body>
+
+<div class='page cover'>
+  <div class='sheet'>
+    <div class='cover-block'>
+      <h1>Neatly Application</h1>
+      <h2>Comprehensive Technical and Product Report</h2>
+      <div class='meta'>
+        <p><strong>Document:</strong> Detailed App Documentation (Formal PDF Edition)</p>
+        <p><strong>Version:</strong> 1.0.0+1</p>
+        <p><strong>Date:</strong> 2026-04-12</p>
+        <p><strong>Project Root:</strong> C:\Users\SWAROOP\Desktop\OSApp\neatly</p>
+      </div>
+      <div class='summary'>
+        <p>This report documents architecture, feature set, file structure, visual design system,
+        data model, routing, services, and current implementation status for the Neatly Flutter application.</p>
+      </div>
+    </div>
+    <div class='footer'>Page 1 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'># Neatly App Detailed Documentation</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>Version: `1.0.0+1`</div>
+<div class='line'>Project Root: `C:\Users\SWAROOP\Desktop\OSApp\neatly`</div>
+<div class='line'>Primary Platform: Android (Flutter app with Material 3)</div>
+<div class='line'>Architecture Style: Layered Flutter app (`UI -&gt; Providers -&gt; Services/DB -&gt; Models`)</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 1) App Overview</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>**Neatly** is an AI-assisted document organizer built with Flutter.</div>
+<div class='line'>It accepts document uploads (`PDF`, `DOCX`, `PPTX`), stores them locally, extracts text, classifies</div>
+<div class='line'>them using Anthropic Claude API, auto-assigns folders, and supports full-text search (FTS5).</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>Core user value:</div>
+<div class='line'>- Centralized file library for productivity documents.</div>
+<div class='line'>- Automatic naming, summarization, tagging, and foldering via AI.</div>
+<div class='line'>- Fast retrieval through indexed search.</div>
+<div class='line'>- Dark-first aesthetic with glassmorphism UI.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 2) Technology Stack</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Framework and Language</div>
+<div class='line'>- Flutter</div>
+<div class='line'>- Dart SDK `&gt;=3.3.0 &lt;4.0.0`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### State and Navigation</div>
+<div class='line'>- `flutter_riverpod` for state management.</div>
+<div class='line'>- `go_router` for routing and shell navigation.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Persistence and Storage</div>
+<div class='line'>- `sqflite` for mobile database access.</div>
+<div class='line'>- `sqflite_common_ffi` for desktop fallback.</div>
+<div class='line'>- `path_provider` + `path` for app document storage.</div>
+<div class='line'>- `shared_preferences` for user/app settings.</div>
+<div class='line'>- `flutter_secure_storage` for API key.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### AI and Networking</div>
+<div class='line'>- `http` for Anthropic API calls.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Document Parsing</div>
+    </div>
+    <div class='footer'>Page 2 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>- `syncfusion_flutter_pdf` for PDF text/page extraction.</div>
+<div class='line'>- `docx_to_text` for DOCX extraction.</div>
+<div class='line'>- `archive` + `xml` for PPTX parsing (ZIP + slide XML extraction).</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### UI/UX Libraries</div>
+<div class='line'>- `google_fonts` (Plus Jakarta Sans).</div>
+<div class='line'>- `phosphor_flutter` icons.</div>
+<div class='line'>- `flutter_animate` for transitions/entrance effects.</div>
+<div class='line'>- `shimmer` for pending loading placeholders.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 3) App Architecture</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Layered Organization</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>1. **UI Layer (`lib/ui`)**</div>
+<div class='line'>- Screens, widgets, shell navigation, reusable components.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>2. **State Layer (`lib/providers`)**</div>
+<div class='line'>- Riverpod notifiers and providers for documents, folders, search, settings, AI queue.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>3. **Data Layer (`lib/data`)**</div>
+<div class='line'>- Local SQLite DB operations.</div>
+<div class='line'>- File operations.</div>
+<div class='line'>- Parsing service for documents.</div>
+<div class='line'>- AI service for classification.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>4. **Domain Layer (`lib/domain/models`)**</div>
+<div class='line'>- Strongly typed models (`DocumentModel`, `FolderModel`, `AiResult`).</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Runtime Pipeline (Upload to Organized Document)</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>1. User uploads file from FAB or empty-state CTA.</div>
+<div class='line'>2. File is copied to app storage (`neatly_files`).</div>
+<div class='line'>3. Document metadata is inserted into SQLite (`ai_status = pending`).</div>
+<div class='line'>4. Document ID is queued in AI queue provider.</div>
+<div class='line'>5. Parser extracts content from file.</div>
+<div class='line'>6. AI service sends prompt to Claude and parses JSON response.</div>
+<div class='line'>7. Folder is fetched/created.</div>
+<div class='line'>8. Document is updated with AI result (name, summary, tags, folder, status).</div>
+<div class='line'>9. Document content is indexed into FTS table.</div>
+<div class='line'>10. UI reflects updated status and searchable metadata.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+    </div>
+    <div class='footer'>Page 3 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>## 4) Routing and Navigation</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>Router file: `lib/router.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Route map</div>
+<div class='line'>- `/onboarding` -&gt; `OnboardingScreen`</div>
+<div class='line'>- Shell routes via `MainShell`:</div>
+<div class='line'>  - `/home` -&gt; `HomeScreen`</div>
+<div class='line'>  - `/library` -&gt; `LibraryScreen`</div>
+<div class='line'>  - `/search` -&gt; `SearchScreen`</div>
+<div class='line'>  - `/settings` -&gt; `SettingsScreen`</div>
+<div class='line'>- `/document/:docId` -&gt; `DocumentDetailScreen`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Route behavior</div>
+<div class='line'>- App starts at `/onboarding`.</div>
+<div class='line'>- Redirect logic checks `isFirstLaunch` from shared preferences.</div>
+<div class='line'>- If first launch, user is forced to onboarding until completion.</div>
+<div class='line'>- Bottom nav in shell controls Home/Library/Search/Settings.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 5) Visual Design System (Color + Aesthetic)</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>Neatly uses a **dark-first**, soft-glass, contrast-balanced visual style with subtle accent glows and</div>
+<div class='line'>rounded surfaces.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### 5.1 Core Palette</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>#### Dark Mode</div>
+<div class='line'>- `darkBackground`: `#0A0A0F`</div>
+<div class='line'>- `darkBackgroundSecondary`: `#111118`</div>
+<div class='line'>- `darkBackgroundTertiary`: `#1A1A24`</div>
+<div class='line'>- `darkTextPrimary`: `#F2F2F7`</div>
+<div class='line'>- `darkTextSecondary`: `#8E8E9A`</div>
+<div class='line'>- `darkTextTertiary`: `#48484F`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>#### Light Mode</div>
+<div class='line'>- `lightBackground`: `#F2F2F7`</div>
+<div class='line'>- `lightBackgroundSecondary`: `#FFFFFF`</div>
+<div class='line'>- `lightBackgroundTertiary`: `#F2F2F7`</div>
+<div class='line'>- `lightTextPrimary`: `#1C1C1E`</div>
+<div class='line'>- `lightTextSecondary`: `#6C6C70`</div>
+<div class='line'>- `lightTextTertiary`: `#AEAEB2`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>#### Accent and Semantic</div>
+    </div>
+    <div class='footer'>Page 4 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>- Default accent (dark): `#7C6FE0`</div>
+<div class='line'>- Default accent (light): `#5E4FD1`</div>
+<div class='line'>- Success: `#34C759`</div>
+<div class='line'>- Warning: `#FF9F0A`</div>
+<div class='line'>- Destructive: `#FF453A` (light variant `#FF3B30`)</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### 5.2 Folder Color Palette</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Violet: `#7C6FE0`</div>
+<div class='line'>- Rose: `#E06F9B`</div>
+<div class='line'>- Amber: `#E09A3F`</div>
+<div class='line'>- Emerald: `#3FB87A`</div>
+<div class='line'>- Sky: `#3F8FE0`</div>
+<div class='line'>- Coral: `#E0613F`</div>
+<div class='line'>- Slate: `#6F8EA0`</div>
+<div class='line'>- Plum: `#9B6FE0`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### 5.3 File Type Colors</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- PDF: `#E0613F`</div>
+<div class='line'>- DOC/DOCX: `#3F8FE0`</div>
+<div class='line'>- PPT/PPTX: `#E09A3F`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### 5.4 Typography</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>Font family: **Plus Jakarta Sans** (`google_fonts`).</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>Token examples:</div>
+<div class='line'>- `displayLarge` 34 / 700</div>
+<div class='line'>- `displayMedium` 28 / 700</div>
+<div class='line'>- `titleLarge` 22 / 600</div>
+<div class='line'>- `bodyMedium` 15 / 400</div>
+<div class='line'>- `caption` 11 / 400</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### 5.5 Layout Tokens</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Spacing uses strict 4dp grid.</div>
+<div class='line'>- Key values:</div>
+<div class='line'>  - `sm=8`, `md=12`, `lg=16`, `screenPadding=20`, `section=32`</div>
+<div class='line'>- Rounded corners:</div>
+<div class='line'>  - `sm=8`, `md=12`, `lg=16`, `xl=20`, `pill=100`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### 5.6 Motion and Interaction</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Entrance animations: fade + slide (`flutter_animate`).</div>
+<div class='line'>- FAB pulse/breathing loop.</div>
+<div class='line'>- AI status shimmer effect.</div>
+    </div>
+    <div class='footer'>Page 5 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>- Document cards support:</div>
+<div class='line'>  - touch scale on tap,</div>
+<div class='line'>  - swipe-left to delete action.</div>
+<div class='line'>- Haptic feedback integrated in nav/select/delete gestures.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### 5.7 Visual Language Summary</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Frosted glass containers (`BackdropFilter` blur).</div>
+<div class='line'>- Soft shadows and low-opacity borders.</div>
+<div class='line'>- Accent-glow highlights on active controls.</div>
+<div class='line'>- Card-first information layout for scanability.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 6) Feature-by-Feature Breakdown</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 6.1 Onboarding</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/ui/screens/onboarding/onboarding_screen.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Single CTA (`Get Started`).</div>
+<div class='line'>- Sets `isFirstLaunch=false` in shared preferences.</div>
+<div class='line'>- Redirects to `/home`.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 6.2 Home Screen</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/ui/screens/home/home_screen.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Greeting based on current time.</div>
+<div class='line'>- Summary text: number of AI-sorted files.</div>
+<div class='line'>- AI queue status pill when processing pending items.</div>
+<div class='line'>- Quick stats row:</div>
+<div class='line'>  - total files,</div>
+<div class='line'>  - total folders,</div>
+<div class='line'>  - files uploaded in last 7 days.</div>
+<div class='line'>- Horizontal folder preview.</div>
+<div class='line'>- Recent documents list using `DocumentCard`.</div>
+<div class='line'>- Empty state with upload CTA if no documents.</div>
+<div class='line'>- Tapping document opens `/document/:id`.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 6.3 Document Card (Core UI Component)</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/ui/screens/home/widgets/document_card.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- States:</div>
+<div class='line'>  - pending: shimmer skeleton,</div>
+    </div>
+    <div class='footer'>Page 6 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>  - processing: progress indicator,</div>
+<div class='line'>  - failed: warning/red accents,</div>
+<div class='line'>  - done: normal content with metadata.</div>
+<div class='line'>- Displays:</div>
+<div class='line'>  - display name,</div>
+<div class='line'>  - AI summary (if present),</div>
+<div class='line'>  - folder chip color/name,</div>
+<div class='line'>  - file size,</div>
+<div class='line'>  - relative timestamp.</div>
+<div class='line'>- Supports:</div>
+<div class='line'>  - swipe-to-delete gesture,</div>
+<div class='line'>  - favorite badge visualization (star).</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 6.4 Library Screen</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/ui/screens/library/library_screen.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Folder grid view.</div>
+<div class='line'>- Includes special **All Files** card.</div>
+<div class='line'>- Folder cards show icon, count, and color.</div>
+<div class='line'>- Empty-state CTA to upload first document.</div>
+<div class='line'>- Tap folder -&gt; `FolderDetailScreen`.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 6.5 Folder Detail Screen</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/ui/screens/library/folder_detail_screen.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Hero-style folder header with radial glow.</div>
+<div class='line'>- File-type filters: `All`, `PDF`, `DOCX`, `PPTX`.</div>
+<div class='line'>- Filtered document list.</div>
+<div class='line'>- Empty state for no matching docs.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 6.6 Search Screen</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/ui/screens/search/search_screen.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Debounced search (250ms).</div>
+<div class='line'>- Full-text query against FTS index.</div>
+<div class='line'>- Recent searches list and management.</div>
+<div class='line'>- Search results reuse `DocumentCard`.</div>
+<div class='line'>- Empty states for no recents / no results.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 6.7 Settings Screen</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/ui/screens/settings/settings_screen.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Currently placeholder UI (`Settings Screen` text).</div>
+    </div>
+    <div class='footer'>Page 7 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>- Backend settings logic exists in `settings_provider.dart` but UI controls are not yet wired.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 6.8 Document Detail Screen</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/ui/screens/document_detail/document_detail_screen.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Route-aware placeholder screen displaying `docId`.</div>
+<div class='line'>- Detailed metadata/content view not yet implemented.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 6.9 Main Shell and Navigation</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>Files:</div>
+<div class='line'>- `lib/ui/shell/main_shell.dart`</div>
+<div class='line'>- `lib/ui/shell/widgets/glass_nav_bar.dart`</div>
+<div class='line'>- `lib/ui/shell/widgets/upload_fab.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Floating glass bottom nav with four tabs.</div>
+<div class='line'>- Floating animated upload FAB.</div>
+<div class='line'>- Edge-to-edge system UI.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 7) Data Model and Database Details</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>Database file: `lib/data/database/app_database.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>SQLite file path: `&lt;app_documents&gt;/neatly.db`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Tables</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>#### 1. `folders`</div>
+<div class='line'>- `id` (PK, autoincrement)</div>
+<div class='line'>- `name` (unique, required)</div>
+<div class='line'>- `color_name`</div>
+<div class='line'>- `icon_name`</div>
+<div class='line'>- `is_ai_generated`</div>
+<div class='line'>- `created_at` (epoch ms)</div>
+<div class='line'>- `sort_order`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>#### 2. `documents`</div>
+<div class='line'>- `id` (PK)</div>
+<div class='line'>- `folder_id` (nullable FK to folders)</div>
+<div class='line'>- `original_name`</div>
+<div class='line'>- `ai_name`</div>
+<div class='line'>- `display_name`</div>
+<div class='line'>- `file_path`</div>
+    </div>
+    <div class='footer'>Page 8 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>- `file_type`</div>
+<div class='line'>- `file_size_bytes`</div>
+<div class='line'>- `page_count`</div>
+<div class='line'>- `ai_summary`</div>
+<div class='line'>- `ai_tags` (JSON string)</div>
+<div class='line'>- `ai_status` (`pending|processing|done|failed`)</div>
+<div class='line'>- `is_favourite` (0/1)</div>
+<div class='line'>- `last_opened_at`</div>
+<div class='line'>- `uploaded_at`</div>
+<div class='line'>- `updated_at`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>#### 3. `document_fts` (FTS5 virtual table)</div>
+<div class='line'>- `doc_id` (unindexed)</div>
+<div class='line'>- `display_name`</div>
+<div class='line'>- `ai_summary`</div>
+<div class='line'>- `full_text_content`</div>
+<div class='line'>- `ai_tags`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>#### 4. `recent_searches`</div>
+<div class='line'>- `id` (PK)</div>
+<div class='line'>- `query`</div>
+<div class='line'>- `searched_at`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Search Implementation</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- FTS query pattern: `query*` prefix search.</div>
+<div class='line'>- Search returns ranked doc IDs from `document_fts`.</div>
+<div class='line'>- IDs are then resolved to document records with folder joins.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Duplicate Handling</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Duplicate check logic exists (`original_name` + `file_size_bytes`).</div>
+<div class='line'>- If setting `autoDeleteDuplicates` is enabled, duplicates are skipped during upload.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 8) Services and Business Logic</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 8.1 File Service</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/data/services/file_service.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Creates/uses app storage directory: `neatly_files`.</div>
+<div class='line'>- Sanitizes copied filenames and prefixes timestamp.</div>
+<div class='line'>- Deletes stored files when documents are deleted.</div>
+<div class='line'>- Provides file type normalization and size formatting helpers.</div>
+    </div>
+    <div class='footer'>Page 9 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>&nbsp;</div>
+<div class='line'>## 8.2 Document Parser Service</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/data/services/document_parser_service.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- PDF:</div>
+<div class='line'>  - Extracts text page-by-page.</div>
+<div class='line'>  - Reads page count.</div>
+<div class='line'>- DOCX:</div>
+<div class='line'>  - Converts binary to plain text.</div>
+<div class='line'>- PPTX:</div>
+<div class='line'>  - Unzips package.</div>
+<div class='line'>  - Reads `ppt/slides/slide*.xml`.</div>
+<div class='line'>  - Extracts `&lt;a:t&gt;` text nodes.</div>
+<div class='line'>  - De-duplicates repeated text snippets.</div>
+<div class='line'>- Trims extracted content to `maxTextExtractionLength`.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 8.3 AI Service</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>File: `lib/data/services/ai_service.dart`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>- Stores Anthropic API key securely (`flutter_secure_storage`).</div>
+<div class='line'>- Validates API key with lightweight test call.</div>
+<div class='line'>- Classification API call includes:</div>
+<div class='line'>  - strict JSON output request,</div>
+<div class='line'>  - suggested name,</div>
+<div class='line'>  - folder name,</div>
+<div class='line'>  - summary,</div>
+<div class='line'>  - tags,</div>
+<div class='line'>  - confidence.</div>
+<div class='line'>- Handles:</div>
+<div class='line'>  - retries with exponential backoff,</div>
+<div class='line'>  - rate limit (`429`),</div>
+<div class='line'>  - invalid key (`401`),</div>
+<div class='line'>  - network exceptions.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 9) State Management (Providers)</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### `databaseProvider`</div>
+<div class='line'>- Exposes singleton `AppDatabase`.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### `documentsProvider` (`DocumentsNotifier`)</div>
+<div class='line'>- Loads documents.</div>
+<div class='line'>- Handles picker upload flow.</div>
+    </div>
+    <div class='footer'>Page 10 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>- Handles single-path upload.</div>
+<div class='line'>- Deletes docs and underlying files.</div>
+<div class='line'>- Toggles favorites.</div>
+<div class='line'>- Renames/moves docs.</div>
+<div class='line'>- Retries AI processing.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### `foldersProvider` (`FoldersNotifier`)</div>
+<div class='line'>- Loads folders.</div>
+<div class='line'>- Creates manual folder.</div>
+<div class='line'>- Auto-creates missing AI folder with color cycling.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### `searchProvider` (`SearchNotifier`)</div>
+<div class='line'>- Debounced text query execution.</div>
+<div class='line'>- Recent search persistence and deletion.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### `settingsProvider` (`SettingsNotifier`)</div>
+<div class='line'>- Theme mode and accent index.</div>
+<div class='line'>- Auto-sort toggle.</div>
+<div class='line'>- AI summary visibility toggle.</div>
+<div class='line'>- Duplicate auto-delete toggle.</div>
+<div class='line'>- Default sort order and grid view state.</div>
+<div class='line'>- First launch status.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### `aiQueueProvider` (`AiQueueNotifier`)</div>
+<div class='line'>- Maintains queue of document IDs.</div>
+<div class='line'>- Sequentially processes docs.</div>
+<div class='line'>- Updates AI status transitions.</div>
+<div class='line'>- Performs extraction + classification + foldering + FTS indexing.</div>
+<div class='line'>- Captures latest queue error.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 10) File and Folder Structure</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>Complete project source structure (`lib` + `android`):</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>```text</div>
+<div class='line'>android/</div>
+<div class='line'>  app/</div>
+<div class='line'>    build.gradle.kts</div>
+<div class='line'>    src/</div>
+<div class='line'>      debug/AndroidManifest.xml</div>
+<div class='line'>      main/</div>
+<div class='line'>        AndroidManifest.xml</div>
+<div class='line'>        java/io/flutter/plugins/GeneratedPluginRegistrant.java</div>
+<div class='line'>        kotlin/com/neatly/neatly/MainActivity.kt</div>
+    </div>
+    <div class='footer'>Page 11 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>        res/</div>
+<div class='line'>          drawable/launch_background.xml</div>
+<div class='line'>          drawable-v21/launch_background.xml</div>
+<div class='line'>          mipmap-hdpi/ic_launcher.png</div>
+<div class='line'>          mipmap-mdpi/ic_launcher.png</div>
+<div class='line'>          mipmap-xhdpi/ic_launcher.png</div>
+<div class='line'>          mipmap-xxhdpi/ic_launcher.png</div>
+<div class='line'>          mipmap-xxxhdpi/ic_launcher.png</div>
+<div class='line'>          values/styles.xml</div>
+<div class='line'>          values-night/styles.xml</div>
+<div class='line'>      profile/AndroidManifest.xml</div>
+<div class='line'>  build.gradle.kts</div>
+<div class='line'>  gradle.properties</div>
+<div class='line'>  gradle/wrapper/</div>
+<div class='line'>    gradle-wrapper.jar</div>
+<div class='line'>    gradle-wrapper.properties</div>
+<div class='line'>  gradlew</div>
+<div class='line'>  gradlew.bat</div>
+<div class='line'>  local.properties</div>
+<div class='line'>  neatly_android.iml</div>
+<div class='line'>  settings.gradle.kts</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>lib/</div>
+<div class='line'>  app.dart</div>
+<div class='line'>  main.dart</div>
+<div class='line'>  router.dart</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>  core/</div>
+<div class='line'>    constants.dart</div>
+<div class='line'>    extensions/</div>
+<div class='line'>      datetime_extensions.dart</div>
+<div class='line'>      int_extensions.dart</div>
+<div class='line'>      string_extensions.dart</div>
+<div class='line'>    theme/</div>
+<div class='line'>      app_colors.dart</div>
+<div class='line'>      app_radius.dart</div>
+<div class='line'>      app_shadows.dart</div>
+<div class='line'>      app_spacing.dart</div>
+<div class='line'>      app_text_styles.dart</div>
+<div class='line'>      app_theme.dart</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>  data/</div>
+<div class='line'>    database/</div>
+<div class='line'>      app_database.dart</div>
+<div class='line'>    services/</div>
+<div class='line'>      ai_service.dart</div>
+<div class='line'>      document_parser_service.dart</div>
+    </div>
+    <div class='footer'>Page 12 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>      file_service.dart</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>  domain/</div>
+<div class='line'>    models/</div>
+<div class='line'>      ai_result.dart</div>
+<div class='line'>      document.dart</div>
+<div class='line'>      folder.dart</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>  providers/</div>
+<div class='line'>    ai_queue_provider.dart</div>
+<div class='line'>    database_provider.dart</div>
+<div class='line'>    documents_provider.dart</div>
+<div class='line'>    folders_provider.dart</div>
+<div class='line'>    search_provider.dart</div>
+<div class='line'>    settings_provider.dart</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>  ui/</div>
+<div class='line'>    screens/</div>
+<div class='line'>      document_detail/</div>
+<div class='line'>        document_detail_screen.dart</div>
+<div class='line'>      home/</div>
+<div class='line'>        home_screen.dart</div>
+<div class='line'>        widgets/</div>
+<div class='line'>          ai_status_pill.dart</div>
+<div class='line'>          document_card.dart</div>
+<div class='line'>          quick_stat_card.dart</div>
+<div class='line'>      library/</div>
+<div class='line'>        folder_detail_screen.dart</div>
+<div class='line'>        library_screen.dart</div>
+<div class='line'>      onboarding/</div>
+<div class='line'>        onboarding_screen.dart</div>
+<div class='line'>      search/</div>
+<div class='line'>        search_screen.dart</div>
+<div class='line'>      settings/</div>
+<div class='line'>        settings_screen.dart</div>
+<div class='line'>    shared/</div>
+<div class='line'>      empty_state.dart</div>
+<div class='line'>      file_type_icon.dart</div>
+<div class='line'>      glass_container.dart</div>
+<div class='line'>    shell/</div>
+<div class='line'>      main_shell.dart</div>
+<div class='line'>      widgets/</div>
+<div class='line'>        glass_nav_bar.dart</div>
+<div class='line'>        upload_fab.dart</div>
+<div class='line'>```</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+    </div>
+    <div class='footer'>Page 13 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>&nbsp;</div>
+<div class='line'>## 11) Android Packaging and Build Profile</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Android app configuration</div>
+<div class='line'>- Namespace: `com.neatly.neatly`</div>
+<div class='line'>- Application ID: `com.neatly.neatly`</div>
+<div class='line'>- Kotlin/Java target: `11`</div>
+<div class='line'>- Gradle plugin: Android `8.7.3`, Kotlin `2.1.0`</div>
+<div class='line'>- NDK configured: `27.0.12077973`</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Current release signing state</div>
+<div class='line'>- Release build type currently uses **debug signing config**.</div>
+<div class='line'>- This is acceptable for internal test APK generation.</div>
+<div class='line'>- For Play Store distribution, a dedicated release keystore must be configured.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 12) Current Functional Status Summary</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Implemented and usable</div>
+<div class='line'>- Onboarding gate.</div>
+<div class='line'>- File picker uploads.</div>
+<div class='line'>- Local file storage and metadata persistence.</div>
+<div class='line'>- AI queue processing and status tracking.</div>
+<div class='line'>- Automatic folder creation from AI result.</div>
+<div class='line'>- Folder/document listings.</div>
+<div class='line'>- Search with FTS and recents.</div>
+<div class='line'>- Dark/light theme engine and accent system.</div>
+<div class='line'>- Android APK build pipeline.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>### Partially implemented or placeholder</div>
+<div class='line'>- Settings screen UI (provider logic exists, UI not wired).</div>
+<div class='line'>- Document detail UI (route exists, placeholder content).</div>
+<div class='line'>- Library sort button (UI present, logic not implemented).</div>
+<div class='line'>- “View all”/“See all” labels in some places are visual only.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 13) Design and Product Identity Summary</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>Neatly’s design identity is:</div>
+<div class='line'>- **Dark-first** and productivity-oriented.</div>
+<div class='line'>- **Card-centric** for scan speed and content hierarchy.</div>
+<div class='line'>- **Glass + blur** elements for modern depth.</div>
+    </div>
+    <div class='footer'>Page 14 of 15</div>
+  </div>
+</div>
+
+<div class='page'>
+  <div class='sheet'>
+    <div class='header'>Neatly - Detailed Technical Report</div>
+    <div class='content'>
+      <div class='line'>- **Accent-driven categorization** (folder colors, type chips, status states).</div>
+<div class='line'>- **Low-friction interactions** (haptics, smooth animations, swipe gestures).</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>This gives the app a premium, modern utility feel while keeping interaction patterns simple and clear.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 14) Suggested Next Enhancements</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>1. Build complete `SettingsScreen` to expose all existing settings provider toggles.</div>
+<div class='line'>2. Replace `DocumentDetailScreen` placeholder with full metadata/preview panel.</div>
+<div class='line'>3. Add optimistic and inline error UI for uploads and AI failures.</div>
+<div class='line'>4. Add explicit duplicate handling dialog (skip/replace/keep both) when auto-delete is off.</div>
+<div class='line'>5. Add tests for database methods and AI queue state transitions.</div>
+<div class='line'>6. Add proper release signing config + CI build script for production APK/AAB.</div>
+<div class='line'>7. Improve folder route to resolve real folder model from DB by `folderId`.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>---</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>## 15) Quick Orientation for New Developers</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>If you are onboarding into this codebase:</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>1. Start from `lib/main.dart`, `lib/app.dart`, and `lib/router.dart`.</div>
+<div class='line'>2. Read providers in this order:</div>
+<div class='line'>   - `documents_provider.dart`</div>
+<div class='line'>   - `ai_queue_provider.dart`</div>
+<div class='line'>   - `folders_provider.dart`</div>
+<div class='line'>   - `search_provider.dart`</div>
+<div class='line'>   - `settings_provider.dart`</div>
+<div class='line'>3. Then read data services:</div>
+<div class='line'>   - `app_database.dart`</div>
+<div class='line'>   - `document_parser_service.dart`</div>
+<div class='line'>   - `ai_service.dart`</div>
+<div class='line'>4. Finally inspect UI shell and Home/Library/Search screens for behavior mapping.</div>
+<div class='line'>&nbsp;</div>
+<div class='line'>This sequence gives fastest understanding of app behavior end-to-end.</div>
+<div class='line'>&nbsp;</div>
+    </div>
+    <div class='footer'>Page 15 of 15</div>
+  </div>
+</div>
+
+</body>
+</html>
