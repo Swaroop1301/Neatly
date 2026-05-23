@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 void main() async {
-  final key = 'AIzaSyDkONv0fbay0P3we_WkpH0iwHMmcRKZ070';
+  final key = '';
   final url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=$key';
 
   print('=== Test 1: Simple hello ===');
